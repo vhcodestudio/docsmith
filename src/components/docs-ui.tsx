@@ -17,7 +17,7 @@ export function Forge({ slug }: { slug: string }) {
   return (
     <div className="mx-auto max-w-3xl px-4 py-20 sm:px-6" role="status" aria-live="polite">
       <p className="font-mono text-xs uppercase tracking-wider text-muted">Forjando</p>
-      <h1 className="wide mt-2 break-all font-mono text-3xl font-bold sm:text-4xl">{slug}</h1>
+      <p className="wide mt-2 break-all font-mono text-3xl font-bold sm:text-4xl">{slug}</p>
       <ol className="mt-10 border-2 border-ink bg-code p-5 font-mono text-sm text-paper shadow-[6px_6px_0_var(--color-marker)]">
         {STEPS.slice(0, n + 1).map((s, i) => (
           <motion.li key={s} initial={{ opacity: 0, x: -6 }} animate={{ opacity: 1, x: 0 }} className="flex gap-3 py-0.5">
