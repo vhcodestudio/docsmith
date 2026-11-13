@@ -79,14 +79,14 @@ async function DocsView({ owner, repo }: { owner: string; repo: string }) {
   ];
 
   return (
-    <div className="mx-auto grid max-w-7xl gap-10 px-4 py-10 sm:px-6 lg:grid-cols-[13rem_1fr] lg:py-14">
-      <aside><Toc items={toc} /></aside>
+    <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)] gap-10 px-4 py-10 sm:px-6 lg:grid-cols-[13rem_minmax(0,1fr)] lg:py-14">
+      <aside className="min-w-0"><Toc items={toc} /></aside>
       <article className="min-w-0 space-y-16">
         <header id="visao" className="scroll-mt-6 border-b-2 border-ink pb-10">
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div className="min-w-0">
               <p className="font-mono text-xs uppercase tracking-wider text-muted">Documentação · branch {d.branch}</p>
-              <h1 className="wide mt-2 break-words text-4xl font-black sm:text-6xl"><span className="text-muted">{d.owner}/</span>{d.repo}</h1>
+              <h1 className="wide mt-2 break-all text-3xl font-black sm:text-6xl"><span className="text-muted">{d.owner}/</span>{d.repo}</h1>
             </div>
             <Download name={`${d.repo}-docs.md`} content={toMarkdown(d)} />
           </div>
