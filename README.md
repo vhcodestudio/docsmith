@@ -5,7 +5,7 @@
 
 🔗 **Ao vivo / Live:** https://docsmith-vhcode.vercel.app · exemplo: https://docsmith-vhcode.vercel.app/r/pmndrs/zustand
 
-<img src="docs/screenshot.jpg" alt="Documentação gerada pelo docsmith" width="720">
+<img src="docs/screenshot.jpg" alt="Documentação gerada pelo docsmith" width="320">
 
 ## Português
 
