@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+@theme {
+  --color-paper: #ebe8e1;
+  --color-sheet: #f5f3ee;
+  --color-ink: #161616;
+  --color-muted: #5d5a54;
+  --color-rule: #cfcac0;
+  --color-marker: #ffe14d;
+  --color-code: #1d1c1a;
+  --font-sans: var(--font-archivo), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+}
+
+html { scroll-behavior: smooth; }
+body { background: var(--color-paper); color: var(--color-ink); font-family: var(--font-sans); }
+:focus-visible { outline: 2px solid var(--color-ink); outline-offset: 2px; box-shadow: 0 0 0 4px var(--color-marker); }
+::selection { background: var(--color-marker); }
+
+.wide { font-stretch: 125%; }
+.narrow { font-stretch: 75%; }
+
+/* highlighter swipe behind headings */
+.mark { background-image: linear-gradient(transparent 55%, var(--color-marker) 55%, var(--color-marker) 92%, transparent 92%); background-repeat: no-repeat; background-size: 0% 100%; transition: background-size .7s cubic-bezier(.2,.8,.2,1); }
+.mark.on { background-size: 100% 100%; }
+
+.ruled { background-image: linear-gradient(var(--color-rule) 1px, transparent 1px); background-size: 100% 2rem; }
+
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .mark { transition: none; } }
+@media print { header nav, .no-print { display: none !important; } body { background: #fff; } }
