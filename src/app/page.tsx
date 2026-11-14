@@ -18,7 +18,7 @@ export default function Home() {
           <div>
             <p className="font-mono text-xs uppercase tracking-wider">Manual de instruções · gerado do código</p>
             <h1 className="wide mt-4 text-[clamp(2.6rem,7vw,5.8rem)] font-black uppercase leading-[0.9] tracking-tight">
-              Todo repo<br />merece um<br /><span className="bg-marker px-2">manual.</span>
+              Todo repo<br />merece um<br /><span className="swipe px-2">manual.</span>
             </h1>
           </div>
           <div className="space-y-6">

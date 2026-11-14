@@ -24,7 +24,10 @@ body { background: var(--color-paper); color: var(--color-ink); font-family: var
 .mark { background-image: linear-gradient(transparent 55%, var(--color-marker) 55%, var(--color-marker) 92%, transparent 92%); background-repeat: no-repeat; background-size: 0% 100%; transition: background-size .7s cubic-bezier(.2,.8,.2,1); }
 .mark.on { background-size: 100% 100%; }
 
+@keyframes swipe { from { background-size: 0% 100%; } to { background-size: 100% 100%; } }
+.swipe { background: linear-gradient(var(--color-marker), var(--color-marker)) no-repeat left / 0% 100%; animation: swipe .9s .4s cubic-bezier(.2,.8,.2,1) forwards; }
+
 .ruled { background-image: linear-gradient(var(--color-rule) 1px, transparent 1px); background-size: 100% 2rem; }
 
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .mark { transition: none; } }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .mark { transition: none; } .swipe { animation: none; background-size: 100% 100%; } }
 @media print { header nav, .no-print { display: none !important; } body { background: #fff; } }
