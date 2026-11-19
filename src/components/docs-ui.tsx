@@ -3,20 +3,21 @@
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import type { TreeNode } from "@/lib/analyze";
+import { dicts, type Lang } from "@/lib/i18n";
 
-const STEPS = ["Consultando o repositório", "Lendo a árvore de arquivos", "Abrindo README e manifesto", "Escolhendo os arquivos principais", "Extraindo exports e rotas", "Montando a página"];
 
 /** Loading state: honest list of what the server is doing, revealed progressively. */
-export function Forge({ slug }: { slug: string }) {
+export function Forge({ slug, lang = "pt" }: { slug: string; lang?: Lang }) {
+  const { title, steps: STEPS } = dicts[lang].forge;
   const [n, setN] = useState(0);
   const reduce = useReducedMotion();
   useEffect(() => {
     const t = setInterval(() => setN((x) => Math.min(x + 1, STEPS.length - 1)), reduce ? 200 : 700);
     return () => clearInterval(t);
-  }, [reduce]);
+  }, [reduce, STEPS.length]);
   return (
     <div className="mx-auto max-w-3xl px-4 py-20 sm:px-6" role="status" aria-live="polite">
-      <p className="font-mono text-xs uppercase tracking-wider text-muted">Forjando</p>
+      <p className="font-mono text-xs uppercase tracking-wider text-muted">{title}</p>
       <p className="wide mt-2 break-all font-mono text-3xl font-bold sm:text-4xl">{slug}</p>
       <ol className="mt-10 border-2 border-ink bg-code p-5 font-mono text-sm text-paper shadow-[6px_6px_0_var(--color-marker)]">
         {STEPS.slice(0, n + 1).map((s, i) => (
@@ -30,7 +31,7 @@ export function Forge({ slug }: { slug: string }) {
   );
 }
 
-export function Toc({ items }: { items: [string, string][] }) {
+export function Toc({ items, label = "Nesta página" }: { items: [string, string][]; label?: string }) {
   const [active, setActive] = useState(items[0][0]);
   useEffect(() => {
     const io = new IntersectionObserver((entries) => {
@@ -45,8 +46,8 @@ export function Toc({ items }: { items: [string, string][] }) {
     return () => io.disconnect();
   }, [items]);
   return (
-    <nav aria-label="Nesta página" className="lg:sticky lg:top-6">
-      <p className="font-mono text-xs uppercase tracking-wider text-muted">Nesta página</p>
+    <nav aria-label={label} className="lg:sticky lg:top-6">
+      <p className="font-mono text-xs uppercase tracking-wider text-muted">{label}</p>
       <ol className="mt-3 flex gap-1 overflow-x-auto border-l-0 lg:block lg:border-l-2 lg:border-ink">
         {items.map(([id, label]) => (
           <li key={id}>
@@ -59,24 +60,24 @@ export function Toc({ items }: { items: [string, string][] }) {
   );
 }
 
-export function Copy({ text, label = "copiar" }: { text: string; label?: string }) {
+export function Copy({ text, label = "copiar", done = "copiado", aria }: { text: string; label?: string; done?: string; aria?: string }) {
   const [ok, setOk] = useState(false);
   return (
     <button onClick={async () => { try { await navigator.clipboard.writeText(text); setOk(true); setTimeout(() => setOk(false), 1400); } catch { /* blocked */ } }}
-      className="shrink-0 border border-paper/30 px-2 py-1 font-mono text-[11px] uppercase hover:bg-marker hover:text-ink" aria-label={`Copiar: ${text}`}>
-      {ok ? "copiado" : label}
+      className="shrink-0 border border-paper/30 px-2 py-1 font-mono text-[11px] uppercase hover:bg-marker hover:text-ink" aria-label={aria ?? `Copiar: ${text}`}>
+      {ok ? done : label}
     </button>
   );
 }
 
-export function Download({ name, content }: { name: string; content: string }) {
+export function Download({ name, content, label = "Baixar .md" }: { name: string; content: string; label?: string }) {
   return (
     <button onClick={() => {
       const url = URL.createObjectURL(new Blob([content], { type: "text/markdown" }));
       Object.assign(document.createElement("a"), { href: url, download: name }).click();
       URL.revokeObjectURL(url);
     }} className="no-print border-2 border-ink bg-sheet px-4 py-2 font-mono text-xs font-bold uppercase shadow-[3px_3px_0_var(--color-ink)] hover:bg-marker active:translate-x-[2px] active:translate-y-[2px] active:shadow-none">
-      Baixar .md
+      {label}
     </button>
   );
 }

@@ -126,13 +126,13 @@ function treeLines(n: TreeNode, depth = 0, max = 2): string[] {
   return (n.children ?? []).flatMap((c) => [`${"  ".repeat(depth)}- ${c.name}${c.children ? "/" : ""}`, ...(c.children && depth + 1 < max ? treeLines(c, depth + 1, max) : [])]);
 }
 
-export function toMarkdown(d: Docs) {
+export function toMarkdown(d: Docs, h = { license: "Licença", stars: "Estrelas", run: "Como rodar", structure: "Estrutura", by: "Gerado por docsmith a partir de" }) {
   return [
     `# ${d.owner}/${d.repo}`, "", d.summary || d.description, "",
-    `**Stack:** ${d.stack.join(", ") || "—"}  `, `**Licença:** ${d.license ?? "—"} · **Estrelas:** ${d.stars}`, "",
-    "## Como rodar", "", "```bash", ...d.commands.map((c) => c.cmd), "```", "",
-    "## Estrutura", "", ...treeLines(d.tree), "",
+    `**Stack:** ${d.stack.join(", ") || "—"}  `, `**${h.license}:** ${d.license ?? "—"} · **${h.stars}:** ${d.stars}`, "",
+    `## ${h.run}`, "", "```bash", ...d.commands.map((c) => c.cmd), "```", "",
+    `## ${h.structure}`, "", ...treeLines(d.tree), "",
     "## API", "", ...d.api.flatMap((m) => [`### \`${m.path}\``, ...m.items.map((i) => `- \`${i.signature}\` _(${i.kind})_`), ""]),
-    `---`, `Gerado por docsmith a partir de https://github.com/${d.owner}/${d.repo}`,
+    `---`, `${h.by} https://github.com/${d.owner}/${d.repo}`,
   ].join("\n");
 }
